@@ -8,7 +8,8 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 # Configuration
-NEWS_API_KEY = os.getenv("NEWS_API_KEY")  # Store API Key in AWS Secrets Manager or Env Variables
+#NEWS_API_KEY = os.getenv("NEWS_API_KEY")  # Store API Key in AWS Secrets Manager or Env Variables
+NEWS_API_KEY = "629e9358bb52438aa0cbab9f611af95f"
 DYNAMODB_TABLE = "NewsArticles"
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(DYNAMODB_TABLE)
