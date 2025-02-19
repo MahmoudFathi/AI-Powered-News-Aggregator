@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - echo "Installing dependencies..."
+      
+
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 058264351046.dkr.ecr.us-east-1.amazonaws.com
+
+  build:
+    commands:
+      - echo "Building the Docker image..."
+      - docker build -t news-scrapper .
+      - echo "Tagging the image.."
+      - docker tag news-scrapper:latest 058264351046.dkr.ecr.us-east-1.amazonaws.com/news-scrapper:latest
+      - echo "Pushing the Docker image to ECR..."
+      - ddocker push 058264351046.dkr.ecr.us-east-1.amazonaws.com/news-scrapper:latest
+
+  post_build:
+    commands:
+      - echo "Check your Repo"
+      
+
+artifacts:
+  files:
+    - '**/*'
